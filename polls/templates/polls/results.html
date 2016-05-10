@@ -9,7 +9,7 @@
 
 <ul>
 {% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} 票数{{ choice.votes|pluralize }}</li>
+    <li>{{ choice.choice_text }} -- 已有{{ choice.votes }}票</li>
 {% endfor %}
 </ul>
 
