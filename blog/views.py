@@ -4,9 +4,22 @@ from .models import Post
 from .forms import PostForm
 
 #博客列表
+# def post_list(request):
+#     posts = Post.objects.filter(published_date__isnull = False).order_by("-create_date")
+#     #posts = Post.objects.order_by("-create_date")
+#     return render(request, 'blog/post_list.html', {'posts':posts})
 def post_list(request):
-    posts = Post.objects.filter(published_date__isnull = False).order_by("-create_date")
-    #posts = Post.objects.order_by("-create_date")
+    postLists = Post.objects.filter(published_date__isnull = False).order_by('-create_date')
+    paginator = Paginator(postLists, 2)
+
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
     return render(request, 'blog/post_list.html', {'posts':posts})
 
 #博客详情
