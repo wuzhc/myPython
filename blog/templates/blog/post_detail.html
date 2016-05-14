@@ -4,16 +4,19 @@
         {% if post.published_date %}
             {{ post.published_date }}
         {% else %}
-            <a class="btn btn-default" href="{% url 'blog:post_publish' pk=post.pk %}">
-            publish
-            </a>
+            {% if user.is_authenticated %}
+                <a class="btn btn-default" href="{% url 'blog:post_publish' pk=post.pk %}">publish</a>
+            {% endif %}
         {% endif %}
-    <a class="btn btn-default" href="{% url 'blog:post_edit' pk=post.pk %}">
-        <span class="glyphicon glyphicon-pencil"></span>
-    </a>
-    <a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}">
-        <span class="glyphicon glyphicon-remove"></span>
-    </a>
+    {% if user.is_authenticated %}
+        <a class="btn btn-default" href="{% url 'blog:post_edit' pk=post.pk %}">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </a>
+        <a class="btn btn-default" href="{% url 'blog:post_remove' pk=post.pk %}">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>
+    {% endif %}
+
     </div>
     <h1>{{ post.title }}</h1>
     <p>{{ post.text|linebreaks }}</p>

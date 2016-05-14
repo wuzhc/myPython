@@ -1,5 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
+from django.contrib.auth.decorators import login_required
 from .models import Post
 from .forms import PostForm
 
@@ -28,6 +29,7 @@ def post_detail(request,pk):
     return render(request, 'blog/post_detail.html', {'post':post})
 
 #创建博客
+@login_required
 def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -41,6 +43,7 @@ def post_new(request):
     return render(request, 'blog/post_new.html', {'form':form})
 
 #编辑博客
+@login_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
