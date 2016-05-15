@@ -1,10 +1,11 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.contrib.auth.decorators import login_required
+from haystack.forms import SearchForm
 from .models import Post
 from .forms import PostForm
 
-#²©¿ÍÁĞ±í
+#åšå®¢åˆ—è¡¨
 # def post_list(request):
 #     posts = Post.objects.filter(published_date__isnull = False).order_by("-create_date")
 #     #posts = Post.objects.order_by("-create_date")
@@ -23,18 +24,18 @@ def post_list(request):
 
     return render(request, 'blog/post_list.html', {'posts':posts})
 
-#²©¿ÍÏêÇé
+#åšå®¢è¯¦æƒ…
 def post_detail(request,pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post':post})
 
-#´´½¨²©¿Í
+#åˆ›å»ºåšå®¢
 @login_required
 def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False) #²ÎÊıcommit£¬¸³ÖµÎªFalse£¬´ú±í²»ÒªÌá½»µ½Êı¾İ¿â
+            post = form.save(commit=False) #å‚æ•°commitï¼Œèµ‹å€¼ä¸ºFalseï¼Œä»£è¡¨ä¸è¦æäº¤åˆ°æ•°æ®åº“
             post.author = request.user
             post.save()
             return redirect('blog:post_detail', pk=post.pk)
@@ -42,7 +43,7 @@ def post_new(request):
         form = PostForm()
     return render(request, 'blog/post_new.html', {'form':form})
 
-#±à¼­²©¿Í
+#ç¼–è¾‘åšå®¢
 @login_required
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -57,19 +58,25 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_new.html', {'form':form})
 
-#·¢²¼²©¿Í
+#å‘å¸ƒåšå®¢
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.publish()
     return redirect('blog:post_detail', pk=post.pk)
 
-#Î´·¢²¼²©¿ÍÁĞ±í
+#æœªå‘å¸ƒåšå®¢åˆ—è¡¨
 def post_draft_list(request):
     posts = Post.objects.filter(published_date__isnull = True).order_by("-create_date")
     return render(request, 'blog/post_draft_list.html', {'posts':posts})
 
-#É¾³ı²©¿Ísd
+#åˆ é™¤åšå®¢sd
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect('blog:post_list')
+
+def full_search(request):
+     keywords = request.GET['q']
+     sform = SearchForm(request.GET)
+     posts = sform.search()
+     return render(request, 'blog/post_search_list.html',{'posts': posts, 'list_header': 'å…³é”®å­— \'{}\' æœç´¢ç»“æœ'.format(keywords)})

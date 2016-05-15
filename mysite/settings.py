@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'haystack',
     'blog',
     'polls.apps.PollsConfig',
     'django.contrib.admin',
@@ -83,26 +84,26 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'mydb',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST':'localhost',
-#         'PORT':'3306',
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wuzhencan$mydb',
-        'USER': 'wuzhencan',
-        'PASSWORD': 'python123456',
-        'HOST':'wuzhencan.mysql.pythonanywhere-services.com',
+        'NAME': 'mydb',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST':'localhost',
         'PORT':'3306',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'wuzhencan$mydb',
+#         'USER': 'wuzhencan',
+#         'PASSWORD': 'python123456',
+#         'HOST':'wuzhencan.mysql.pythonanywhere-services.com',
+#         'PORT':'3306',
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -154,3 +155,14 @@ LOGIN_REDIRECT_URL = '/'
 #     os.path.join(BASE_DIR, 'mysite/templates'),
 #     os.path.join(BASE_DIR, 'blog/templates'),
 # )
+
+# full text search
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'blog.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    },
+}
+
+# 自动更新索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

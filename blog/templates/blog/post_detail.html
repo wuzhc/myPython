@@ -16,8 +16,13 @@
             <span class="glyphicon glyphicon-remove"></span>
         </a>
     {% endif %}
-
     </div>
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.text|linebreaks }}</p>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h1>{{ post.title }}</h1>
+            <blockquote>
+            <p>{{ post.text|linebreaks }}</p>
+                </blockquote>
+        </div>
+    </div>
 {% endblock %}
