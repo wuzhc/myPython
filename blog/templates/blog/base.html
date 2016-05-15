@@ -6,12 +6,15 @@
     <title>我的博客</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link type="text/css" rel="stylesheet" href="{% static 'syntaxhighlighter/styles/shCoreDefault.css' %}"/>
-    <script type="text/javascript" src="{% static 'syntaxhighlighter/scripts/shCore.js' %}"></script>
-    <script type="text/javascript">SyntaxHighlighter.all();</script>
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'syntaxhighlighter/styles/shCoreDefault.css' %}"/>
+    <script type="text/javascript" src="{% static 'syntaxhighlighter/scripts/shCore.js' %}"></script>
+    <script type="text/javascript">
+        SyntaxHighlighter.config.bloggerMode =true;
+        SyntaxHighlighter.all();
+    </script>
 </head>
 <body>
 
