@@ -21,8 +21,12 @@
         <div class="panel-body">
             <h2>{{ post.title }}</h2>
             <blockquote>
-            <p>{{ post.text|linebreaks }}</p>
-                </blockquote>
+            <p>
+                {% autoescape off %}
+                {{ post.text|linebreaks }}
+                {% endautoescape %}
+            </p>
+            </blockquote>
         </div>
     </div>
 {% endblock %}

@@ -6,7 +6,11 @@
             <h2><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h2>
             <blockquote>
             <p>published: {{ post.published_date }}</p>
-            <p class="lead">{{ post.text|linebreaks }}</p>
+            <p class="lead">
+                {% autoescape off %}
+                {{ post.text|truncatechars:200 }}
+                {% endautoescape %}
+            </p>
             </blockquote>
         </div>
         </div>
