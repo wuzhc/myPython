@@ -12,7 +12,7 @@ from .forms import PostForm
 #     return render(request, 'blog/post_list.html', {'posts':posts})
 def post_list(request):
     postLists = Post.objects.filter(published_date__isnull = False).order_by('-create_date')
-    paginator = Paginator(postLists, 2)
+    paginator = Paginator(postLists, 4)
 
     page = request.GET.get('page')
     try:
